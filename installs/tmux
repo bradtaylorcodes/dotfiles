@@ -1,0 +1,5 @@
+if [[ "$(uname)" == "Darwin" ]]; then
+  brew install tmux
+else
+  sudo apt install tmux
+fi
