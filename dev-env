@@ -48,3 +48,6 @@ copy_file() {
     execute rm $to/$name 
     execute cp $from $to/$name
 }
+
+copy_dir .config $HOME/.config
+copy_file ./.tmux.conf $HOME

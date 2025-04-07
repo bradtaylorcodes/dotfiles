@@ -30,7 +30,7 @@ execute() {
 }
 
 
-log "$script_dir --$filter"
+log "$script_dir -- $filter"
 
 cd $script_dir
 
