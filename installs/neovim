@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-git clone https://github.com/neovim/neovim $HOME/personal/neovim
+echo "Installing Neovim"
+
+version="v0.11.0"
+
+if [ -n "$NVIM_VERSION" ]; then
+    version="$NVIM_VERSION"
+fi
+
+git clone -b $version --single-branch https://github.com/neovim/neovim $HOME/personal/neovim
 
 if [[ "$(uname)" == "Darwin" ]]; then
   xcode-select --install

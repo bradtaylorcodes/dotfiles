@@ -35,7 +35,7 @@ log "$script_dir --$filter"
 cd $script_dir
 
 # Finds every executable file in the dotfiles directory
-scripts=$(find ./runs -maxdepth 1 -mindepth 1 -perm -111 -type f)
+scripts=$(find ./installs -maxdepth 1 -mindepth 1 -perm -111 -type f)
 
 for script in $scripts; do
   if echo "$scripts" | grep -qv "$filter"; then
