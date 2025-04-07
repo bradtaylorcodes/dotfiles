@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+git clone https://github.com/neovim/neovim $HOME/personal/neovim
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  xcode-select --install
+
+  if ! command -v brew >/dev/null 2>&1; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
+  brew install ninja cmake gettext curl
+fi
+
+if [[ "$(uname)" == "Linux" ]]; then
+  sudo apt-get install ninja-build gettext cmake curl build-essential
+fi
+
+cd $HOME/personal/neovim
+
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
