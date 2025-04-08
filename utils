@@ -44,3 +44,15 @@ is_linux() {
 get_script_dir() {
   echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 }
+
+addToPath() {
+  if [[ "$PATH" != *"$1"* ]]; then
+    export PATH=$PATH:$1
+  fi
+}
+
+addToPathFront() {
+  if [[ "$PATH" != *"$1"* ]]; then
+    export PATH=$1:$PATH
+  fi
+}
