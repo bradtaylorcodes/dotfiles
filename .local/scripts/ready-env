@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 cd $DEV_ENV_HOME
-./dev-env
+./ready-env $1
+hash -r
