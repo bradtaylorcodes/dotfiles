@@ -1,5 +1,11 @@
-if [[ "$(uname)" == "Darwin" ]]; then
-  brew install tmux
-else
-  sudo apt install tmux
+#!/usr/bin/env bash
+
+source ../utils
+
+if ! is_installed tmux; then
+  if is_mac; then
+    brew install tmux
+  else
+    sudo apt install tmux
+  fi
 fi

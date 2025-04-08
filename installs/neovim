@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Installing Neovim"
+source ../utils
 
 version="v0.11.0"
 
@@ -10,7 +10,7 @@ fi
 
 git clone -b $version --single-branch https://github.com/neovim/neovim $HOME/personal/neovim
 
-if [[ "$(uname)" == "Darwin" ]]; then
+if is_mac; then
   xcode-select --install
 
   if ! command -v brew >/dev/null 2>&1; then
@@ -20,7 +20,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
   brew install ninja cmake gettext curl
 fi
 
-if [[ "$(uname)" == "Linux" ]]; then
+if is_linux; then
   sudo apt-get install ninja-build gettext cmake curl build-essential
 fi
 

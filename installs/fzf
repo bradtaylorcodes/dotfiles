@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source ../utils
+
+if ! is_installed fzf; then
+  if [[ "$(uname)" == "Darwin" ]]; then
+    brew install fzf
+  fi
+
+  if [[ "$(uname)" == "Linux" ]]; then
+    sudo apt install fzf
+  fi
+fi

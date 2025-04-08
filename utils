@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+log() {
+  if [[ $dry == 1 ]]; then
+    echo "DRY RUN: $@"
+  else
+    echo "$@"
+  fi
+}
+
+execute() {
+  log "execute $@"
+  if [[ $dry == 1 ]]; then
+    return
+  fi
+  "$@"
+}
+
+
+is_installed() {
+  if command -v "$1" >/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+is_mac() {
+  if [[ "$(uname)" == "Darwin" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+is_linux() {
+  if [[ "$(uname)" == "Linux" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+get_script_dir() {
+  echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+}

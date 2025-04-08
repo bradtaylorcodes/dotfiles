@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-script_dir="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
+source ./utils
+
+script_dir=$(get_script_dir)
 dry="0"
 
 while [[ $# > 0 ]]; do
@@ -10,35 +12,16 @@ while [[ $# > 0 ]]; do
     shift
 done
 
-log() {
-    if [[ $dry == "1" ]]; then
-        echo "[DRY_RUN]: $@"
-    else
-        echo "$@"
-    fi
-}
-
-execute() {
-    log "execute: $@"
-    if [[ $dry == "1" ]]; then
-        return
-    fi
-
-    "$@"
-}
-
-log "--------- dev-env ---------"
-
 cd $script_dir
 copy_dir() {
-    pushd $1
+    pushd $1 > /dev/null
     to=$2
     dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
     for dir in $dirs; do
         execute rm -rf $to/$dir
         execute cp -r $dir $to/$dir
     done
-    popd
+    popd > /dev/null
 }
 
 copy_file() {
@@ -50,4 +33,5 @@ copy_file() {
 }
 
 copy_dir .config $HOME/.config
-copy_file ./.tmux.conf $HOME
+copy_dir .local $HOME/.local
+copy_file .tmux.conf $HOME
