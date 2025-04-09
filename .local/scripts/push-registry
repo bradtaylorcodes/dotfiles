@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+update_sde_var() {
+  sed -i '' 's/^SDE_REGISTRY[[:space:]]*?=[[:space:]]*.*/SDE_REGISTRY ?= '"$1"'/' Makefile
+}
+
+registry=$1
+
+if [[ ! $registry == "" ]]; then
+  update_sde_var $registry
+else
+  echo "No registry provided. Using default."
+fi
+
+DEFAULT_DOCKER_PLATFORM=linux/amd64 make build-and-push-registry

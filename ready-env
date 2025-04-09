@@ -35,5 +35,4 @@ copy_file() {
 copy_dir .config $HOME/.config
 copy_dir .local $HOME/.local
 copy_file .tmux.conf $HOME
-copy_file tmux-sessionizer $HOME/.local/scripts
 copy_file .ready-tmux $HOME
