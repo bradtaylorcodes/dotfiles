@@ -6,10 +6,8 @@ update_sde_var() {
 
 registry=$1
 
-if [[ ! $registry == "" ]]; then
+if [[ -n "$registry" ]]; then
   update_sde_var $registry
-else
-  echo "No registry provided. Using default."
 fi
 
 DEFAULT_DOCKER_PLATFORM=linux/amd64 make build-and-push-registry
