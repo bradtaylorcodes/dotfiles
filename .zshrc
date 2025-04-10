@@ -4,7 +4,7 @@ if command -v fzf >/dev/null; then
   source <(fzf --zsh)
 fi
 
-export DEV_ENV_HOME="$HOME/dev-env"
+export DEV_ENV_HOME="$HOME/personal/dotfiles"
 source $DEV_ENV_HOME/utils
 source $HOME/.zshrc.work
 
