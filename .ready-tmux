@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
+tmux rename-window nvim
 tmux new-window -n scratch -d
 nvim .
