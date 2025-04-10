@@ -2,37 +2,44 @@
 
 source ./utils
 
-script_dir=$(get_script_dir)
 dry="0"
 
-while [[ $# > 0 ]]; do
-    if [[ "$1" == "--dry" ]]; then
-        dry="1"
-    fi
-    shift
+for arg in "$@"; do
+  if [[ "$arg" == "--dry" ]]; then
+    dry="1"
+    break
+  fi
 done
 
-cd $script_dir
 copy_dir() {
-    pushd $1 > /dev/null
-    to=$2
-    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
-    for dir in $dirs; do
-        execute rm -rf $to/$dir
-        execute cp -r $dir $to/$dir
-    done
-    popd > /dev/null
+  local source_dir="$DEV_ENV_HOME/$1"
+  local to="$2"
+  local dir_name=$(basename "$source_dir")
+  local target_dir="$to/$dir_name"
+
+  execute mkdir -p "$to"
+
+  # Remove any existing directory or symlink at the target
+  execute rm -rf "$target_dir"
+
+  execute ln -s "$source_dir" "$target_dir"
 }
 
 copy_file() {
-    from=$1
-    to=$2
-    name=$(basename $from)
-    execute rm $to/$name 
-    execute cp $from $to/$name
+  local src_file="$DEV_ENV_HOME/$1"
+  local target_dir="$2"
+  local file_name=$(basename "$src_file")
+  local target_file="$target_dir/$file_name"
+
+  execute mkdir -p "$target_dir"
+
+  # Remove any existing file or symlink at the target file
+  execute rm -f "$target_file"
+
+  execute ln -s "$src_file" "$target_file"
 }
 
-copy_dir .config $HOME/.config
-copy_dir .local $HOME/.local
+copy_dir .config/nvim $HOME/.config
+copy_dir .local/scripts $HOME/.local
 copy_file .tmux.conf $HOME
 copy_file .ready-tmux $HOME
