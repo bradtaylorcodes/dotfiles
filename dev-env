@@ -18,10 +18,7 @@ copy_dir() {
   local target_dir="$to/$dir_name"
 
   execute mkdir -p "$to"
-
-  # Remove any existing directory or symlink at the target
   execute rm -rf "$target_dir"
-
   execute ln -s "$source_dir" "$target_dir"
 }
 
@@ -32,15 +29,12 @@ copy_file() {
   local target_file="$target_dir/$file_name"
 
   execute mkdir -p "$target_dir"
-
-  # Remove any existing file or symlink at the target file
   execute rm -f "$target_file"
-
   execute ln -s "$src_file" "$target_file"
 }
 
+# copies dir or file and creates symlink
 copy_dir .config/nvim $HOME/.config
 copy_dir .local/scripts $HOME/.local
 copy_file .tmux.conf $HOME
-copy_file .ready-tmux $HOME
 copy_file .zshrc $HOME

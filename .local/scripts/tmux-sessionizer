@@ -13,7 +13,7 @@ has_session() {
 }
 
 hydrate() {
-  tmux send-keys -t $1 "ready-tmux" c-M
+  tmux new-window -t $1 -dn "scratch"
 }
 
 if [[ $# -eq 1 ]]; then
