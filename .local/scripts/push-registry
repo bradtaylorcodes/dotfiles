@@ -10,4 +10,4 @@ if [[ -n "$registry" ]]; then
   update_sde_var $registry
 fi
 
-DEFAULT_DOCKER_PLATFORM=linux/amd64 make build-and-push-registry
+DOCKER_DEFAULT_PLATFORM="linux/amd64" make build-and-push-registry
