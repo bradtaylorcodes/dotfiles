@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+selected=$(git branch -a | fzf)
+
+if [[ -z "$selected" ]]; then
+  exit 0
+fi
+
+# Trim leading "* " if selected from local branch list
+selected=$(echo "$selected" | sed 's/^[* ]*//')
+
+# Handle remote branch names
+if [[ "$selected" == remotes/* ]]; then
+  branch_name=${selected#remotes/origin/}
+  git switch "$branch_name"
+else
+  git switch "$selected"
+fi
+
