@@ -11,6 +11,8 @@ source $HOME/.zshrc.work
 # my scripts and aliases
 addToPath $HOME/.local/scripts
 
+bindkey -s '\C-f' 'tmux-sessionizer\n'
+
 alias v="nvim"
 alias vim="nvim"
 alias ls="ls -G"
