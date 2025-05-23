@@ -11,14 +11,13 @@ return {
       },
     },
     config = function()
-      local extends = {
+      -- friendly-snippets - enable standardized comments snippets
+      for ft, snips in pairs {
         typescript = { 'tsdoc' },
         javascript = { 'jsdoc' },
         lua = { 'luadoc' },
         python = { 'pydoc' },
-      }
-      -- friendly-snippets - enable standardized comments snippets
-      for ft, snips in pairs(extends) do
+      } do
         require('luasnip').filetype_extend(ft, snips)
       end
 
