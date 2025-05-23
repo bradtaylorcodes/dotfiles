@@ -16,15 +16,6 @@ return {
         javascript = { 'jsdoc' },
         lua = { 'luadoc' },
         python = { 'pydoc' },
-        rust = { 'rustdoc' },
-        cs = { 'csharpdoc' },
-        java = { 'javadoc' },
-        c = { 'cdoc' },
-        cpp = { 'cppdoc' },
-        php = { 'phpdoc' },
-        kotlin = { 'kdoc' },
-        ruby = { 'rdoc' },
-        sh = { 'shelldoc' },
       }
       -- friendly-snippets - enable standardized comments snippets
       for ft, snips in pairs(extends) do
