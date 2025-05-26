@@ -5,7 +5,9 @@ source ../utils
 if ! is_installed tmux; then
   if is_mac; then
     brew install tmux
-  else
+  fi
+
+  if is_linux; then
     sudo apt install tmux
   fi
 fi
