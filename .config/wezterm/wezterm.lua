@@ -6,7 +6,7 @@ local config = {}
 
 config.font_size = 18
 config.color_scheme = "Tokyo Night"
-config.enable_tab_bar = false
+config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 
 -- cursor styles
