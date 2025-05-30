@@ -9,7 +9,6 @@ function M.apply_to_config(config)
     mods = 'LEADER',
     action = wezterm.action_callback(function(window, pane)
       local workspaces = wezterm.mux.get_workspace_names()
-      wezterm.log_info(workspaces)
 
       local choices = {}
       for _, name in ipairs(workspaces) do

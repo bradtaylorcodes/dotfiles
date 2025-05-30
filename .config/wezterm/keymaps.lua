@@ -39,13 +39,6 @@ function M.apply_to_config(config)
     },
     { key = 'd', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
     { key = 'f', mods = 'LEADER', action = wezterm.action_callback(sessionizer.toggle) },
-    -- {
-    --   key = 's',
-    --   mods = 'LEADER',
-    --   action = wezterm.action.ShowLauncherArgs {
-    --     flags = 'WORKSPACES',
-    --   },
-    -- },
   }
 
   map_tab_keys(config)
