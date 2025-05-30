@@ -1,6 +1,4 @@
-local wezterm = require 'wezterm'
-local action = wezterm.action
-local sessionizer = require 'sessionizer'
+local act = require('wezterm').action
 
 local M = {}
 
@@ -9,36 +7,14 @@ local function map_tab_keys(config)
     table.insert(config.keys, {
       key = tostring(i),
       mods = 'LEADER',
-      action = action.ActivateTab(i - 1),
+      action = act.ActivateTab(i - 1),
     })
   end
 end
 
 function M.apply_to_config(config)
-  config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 }
   config.keys = {
-    {
-      key = '-',
-      mods = 'LEADER',
-      action = action.SplitVertical { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = '|',
-      mods = 'LEADER',
-      action = action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'm',
-      mods = 'LEADER',
-      action = action.TogglePaneZoomState,
-    },
-    {
-      key = 'c',
-      mods = 'LEADER',
-      action = action.SpawnTab 'CurrentPaneDomain',
-    },
-    { key = 'd', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
-    { key = 'f', mods = 'LEADER', action = wezterm.action_callback(sessionizer.toggle) },
+    { key = 'd', mods = 'LEADER', action = act.ShowDebugOverlay },
   }
 
   map_tab_keys(config)
