@@ -1,4 +1,6 @@
-local action = require('wezterm').action
+local wezterm = require 'wezterm'
+local action = wezterm.action
+local sessionizer = require 'sessionizer'
 
 local M = {}
 
@@ -26,25 +28,24 @@ function M.apply_to_config(config)
       action = action.SplitHorizontal { domain = 'CurrentPaneDomain' },
     },
     {
-      key = 's',
-      mods = 'LEADER',
-      action = action.ShowLauncher,
-    },
-    {
       key = 'm',
       mods = 'LEADER',
       action = action.TogglePaneZoomState,
     },
     {
       key = 'c',
-      mods = 'CTRL',
-      action = action.SendKey { key = 'Escape' },
-    },
-    {
-      key = 'c',
       mods = 'LEADER',
       action = action.SpawnTab 'CurrentPaneDomain',
     },
+    { key = 'd', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
+    { key = 'f', mods = 'LEADER', action = wezterm.action_callback(sessionizer.toggle) },
+    -- {
+    --   key = 's',
+    --   mods = 'LEADER',
+    --   action = wezterm.action.ShowLauncherArgs {
+    --     flags = 'WORKSPACES',
+    --   },
+    -- },
   }
 
   map_tab_keys(config)

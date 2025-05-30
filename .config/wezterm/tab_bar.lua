@@ -11,6 +11,7 @@ function M.apply_to_config(config)
     local date = wezterm.strftime '%Y-%m-%d %H:%M'
 
     window:set_right_status(wezterm.format {
+      { Text = window:active_workspace() .. '    ' },
       { Text = date },
     })
   end)
