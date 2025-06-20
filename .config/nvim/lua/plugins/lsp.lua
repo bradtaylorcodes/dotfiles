@@ -56,6 +56,7 @@ return {
         },
       },
       astro = {},
+      jdtls = {},
     }
 
     require('mason').setup {}
