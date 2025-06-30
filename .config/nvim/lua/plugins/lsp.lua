@@ -34,7 +34,7 @@ return {
       lua_ls = {},
       html = {},
       marksman = {},
-      gopls = {},
+      -- gopls = {},
       dockerls = {},
       ts_ls = {
         settings = {
