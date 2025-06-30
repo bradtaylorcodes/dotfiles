@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 
-source ./utils
+log() {
+  if [[ $dry == 1 ]]; then
+    echo "DRY RUN: $@"
+  else
+    echo "$@"
+  fi
+}
+
+execute() {
+  log "execute $@"
+  if [[ $dry == 1 ]]; then
+    return
+  fi
+  "$@"
+}
+
+get_script_dir() {
+  echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+}
 
 script_dir=$(get_script_dir)
 filter=""

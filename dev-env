@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source ./utils
-
 dry="0"
 
 for arg in "$@"; do
@@ -11,6 +9,22 @@ for arg in "$@"; do
   fi
 done
 
+log() {
+  if [[ $dry == 1 ]]; then
+    echo "DRY RUN: $@"
+  else
+    echo "$@"
+  fi
+}
+
+execute() {
+  log "execute $@"
+  if [[ $dry == 1 ]]; then
+    return
+  fi
+  "$@"
+}
+
 copy_dir() {
   local source_dir="$DEV_ENV_HOME/$1"
   local to="$2"
@@ -19,7 +33,7 @@ copy_dir() {
 
   execute mkdir -p "$to"
   execute rm -rf "$target_dir"
-  execute ln -s "$source_dir" "$target_dir"
+  execute cp -r "$source_dir" "$target_dir"
 }
 
 copy_file() {
@@ -30,10 +44,9 @@ copy_file() {
 
   execute mkdir -p "$target_dir"
   execute rm -f "$target_file"
-  execute ln -s "$src_file" "$target_file"
+  execute cp "$src_file" "$target_file"
 }
 
-# copies dir or file and creates symlink
 copy_dir .config/nvim $HOME/.config
 copy_dir .config/wezterm $HOME/.config
 copy_dir .local/scripts $HOME/.local
