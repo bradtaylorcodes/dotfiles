@@ -1,0 +1,30 @@
+let mapleader = " "
+
+set relativenumber
+
+set scrolloff=10
+
+set ignorecase
+set smartcase
+set nohlsearch
+set incsearch
+
+set surround
+set highlightedyank
+set nerdtree
+
+" Pane navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
+" Popup navigation
+inoremap <C-n> <Action>(PopupMenu-selectNext)
+inoremap <C-p> <Action>(PopupMenu-selectPrev)
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+map <leader>e :NERDTreeToggle<CR>

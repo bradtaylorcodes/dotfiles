@@ -24,7 +24,9 @@ addToPathFront() {
     export PATH=$1:$PATH
   fi
 }
-# source $HOME/.zshrc.work
+
+# work specific configurations
+source $HOME/.zshrc.work
 
 # my scripts and aliases
 addToPath $HOME/.local/scripts

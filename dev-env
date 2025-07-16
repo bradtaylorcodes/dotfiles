@@ -52,3 +52,4 @@ copy_dir .config/wezterm $HOME/.config
 copy_dir .local/scripts $HOME/.local
 copy_file .tmux.conf $HOME
 copy_file .zshrc $HOME
+copy_file .ideavimrc $HOME
