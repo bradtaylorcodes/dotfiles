@@ -1,16 +1,12 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
-  dependencies = {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    'windwp/nvim-ts-autotag',
-    'nvim-treesitter/nvim-treesitter-context',
-    'nvim-treesitter/nvim-treesitter-textobjects',
-  },
-  build = ':TSUpdate',
-  config = function()
-    require('nvim-treesitter.configs').setup {
-      -- A list of parser names, or "all" (the five listed parsers should always be installed)
-      ensure_installed = {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
+    build = ':TSUpdate',
+    init = function()
+      -- Languages to ensure are installed
+      local ensure_installed = {
         'json',
         'javascript',
         'typescript',
@@ -29,47 +25,64 @@ return {
         'graphql',
         'vimdoc',
         'bash',
-      },
+      }
 
-      -- Enable nvim-ts-autotag (use treesitter to autoclose and autorename html tags)
-      autotag = { enable = true },
+      -- Install any missing parsers on startup
+      local installed = require('nvim-treesitter.config').get_installed()
+      local to_install = vim.iter(ensure_installed)
+          :filter(function(parser)
+            return not vim.tbl_contains(installed, parser)
+          end)
+          :totable()
 
-      -- Automatically install missing parsers when entering buffer
-      -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
+      if #to_install > 0 then
+        require('nvim-treesitter').install(to_install)
+      end
 
-      textobjects = {
-        select = {
-          enable = true,
+      -- Enable treesitter highlighting and indentation via FileType autocmd
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          pcall(vim.treesitter.start)
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    opts = {},
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      max_lines = 3,
+    },
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
+    config = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          local ok, textobjects = pcall(require, 'nvim-treesitter-textobjects.select')
+          if not ok then
+            return
+          end
 
-          -- Automatically jump forward to textobj, similar to targets.vim
-          lookahead = true,
+          local buf = vim.api.nvim_get_current_buf()
 
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            -- You can optionally set descriptions to the mappings (used in the desc parameter of
-            -- nvim_buf_set_keymap) which plugins like which-key display
-            ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
-          },
-        },
-      },
-    }
+          local function set_keymap(mode, lhs, query, desc)
+            vim.keymap.set(mode, lhs, function()
+              textobjects.select_textobject(query, 'textobjects')
+            end, { buffer = buf, desc = desc })
+          end
 
-    -- enable nvim-treesitter-context
-    local treesitter_context = require 'treesitter-context'
-
-    vim.g.skip_ts_context_commentstring_module = true
-    require('ts_context_commentstring').setup {
-      enable_autocmd = false,
-    }
-
-    treesitter_context.setup {
-      max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
-    }
-  end,
+          set_keymap({ 'x', 'o' }, 'af', '@function.outer', 'Select outer function')
+          set_keymap({ 'x', 'o' }, 'if', '@function.inner', 'Select inner function')
+          set_keymap({ 'x', 'o' }, 'ac', '@class.outer', 'Select outer class')
+          set_keymap({ 'x', 'o' }, 'ic', '@class.inner', 'Select inner part of a class region')
+        end,
+      })
+    end,
+  },
 }
