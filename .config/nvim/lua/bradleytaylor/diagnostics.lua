@@ -21,5 +21,5 @@ end, { desc = 'Previous diagnostic message' })
 set('n', ']d', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Next diagnostic message' })
-set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostic error' })
+set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic error' })
 set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })

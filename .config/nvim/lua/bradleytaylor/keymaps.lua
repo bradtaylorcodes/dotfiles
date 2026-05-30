@@ -17,7 +17,7 @@ set('n', '<leader>Y', [["+Y]]) -- yank to system clipboard
 set({ 'n', 'v' }, '<leader>d', [["_d]]) -- delete to void register
 set('n', 'x', '"_x') -- delete single character without copying into register
 
-set('n', '<leader>ww', 'cmd set wrap!<cr>', { desc = 'Toggle word wrap' })
+set('n', '<leader>ww', '<cmd>set wrap!<cr>', { desc = 'Toggle word wrap' })
 
 set('n', '<leader>x', '<cmd>!chmod +x %<cr>', { silent = true, desc = 'Make current file executable' })
 
