@@ -3,7 +3,6 @@ return {
   dependencies = {
     'mason-org/mason.nvim',
     'mason-org/mason-lspconfig.nvim',
-    -- 'WhoIsSethDaniel/mason-tool-installer.nvim',
     { 'j-hui/fidget.nvim', opts = {} },
     'b0o/schemastore.nvim', -- access to schemastore catalog for json
   },
@@ -15,7 +14,6 @@ return {
         end
         local builtin = require 'telescope.builtin'
 
-        -- map('gd', builtin.lsp_definitions, 'Go to definition')
         set('gd', vim.lsp.buf.definition, 'Go to definition')
         set('gr', builtin.lsp_references, 'Show list of references')
         set('gI', builtin.lsp_implementations, 'Go to implementation')
@@ -69,13 +67,5 @@ return {
       vim.lsp.config(server_name, config)
       vim.lsp.enable(server_name)
     end
-
-    -- this is for when mason-tool-installer gets updated
-    -- local ensure_installed = vim.tbl_keys(servers or {})
-    -- additional tools that aren't LSP servers
-    -- vim.list_extend(ensure_installed, {
-    --   'stylua',
-    --   'prettier',
-    -- })
   end,
 }
