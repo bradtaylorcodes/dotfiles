@@ -11,7 +11,7 @@ return {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
-      current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+      current_line_blame = false, -- Toggle with <leader>gb
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
@@ -58,7 +58,7 @@ return {
         set('n', '<leader>ghb', function()
           gs.blame_line { full = true }
         end)
-        set('n', '<leader>td', gs.toggle_current_line_blame)
+        set('n', '<leader>gb', gs.toggle_current_line_blame)
         set('n', '<leader>ghd', gs.diffthis)
         set('n', '<leader>ghD', function()
           gs.diffthis '~'

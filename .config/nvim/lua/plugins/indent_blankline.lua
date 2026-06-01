@@ -4,8 +4,9 @@ return {
   ---@module "ibl"
   ---@type ibl.config
   opts = {
+    indent = { char = "▏" },
     scope = {
-      enabled = false,
+      enabled = true,
     },
   },
 }

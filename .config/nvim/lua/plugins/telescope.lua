@@ -1,6 +1,5 @@
 return {
   'nvim-telescope/telescope.nvim',
-  version = '*',
   branch = 'master',
   event = 'VimEnter',
   dependencies = {
@@ -9,12 +8,28 @@ return {
     { 'nvim-telescope/telescope-ui-select.nvim' },
   },
   config = function()
+    -- Toggle hidden files in find_files picker
+    local show_hidden = false
+    local function toggle_hidden_files()
+      show_hidden = not show_hidden
+      local prompt = require('telescope.actions.state').get_current_line()
+      require('telescope.builtin').find_files { hidden = show_hidden, no_ignore = show_hidden, default_text = prompt }
+    end
+
     require('telescope').setup {
       defaults = {
         sorting_strategy = 'ascending',
         layout_config = {
           horizontal = {
             prompt_position = 'top',
+          },
+        },
+        mappings = {
+          i = {
+            ['<C-h>'] = toggle_hidden_files,
+          },
+          n = {
+            ['<C-h>'] = toggle_hidden_files,
           },
         },
       },
