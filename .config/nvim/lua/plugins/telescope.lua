@@ -1,7 +1,8 @@
 return {
   'nvim-telescope/telescope.nvim',
+  version = '*',
+  branch = 'master',
   event = 'VimEnter',
-  branch = '0.1.x',
   dependencies = {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'nvim-lua/plenary.nvim',
