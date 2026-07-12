@@ -1,43 +1,74 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
+# default_paths are searched on every machine. This file (one dir per line,
+# # comments allowed) adds extra per-machine roots on top of them. It lives
+# outside the dotfiles repo, so it survives `dev-env` redeploys.
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer/paths"
+
+default_paths=(
+  "$HOME/personal"
+  "$HOME/personal/dotfiles/.config"
+)
+
 switch_to() {
-  if [[ -z $TMUX ]]; then
-    tmux attach-session -t $1
+  if [[ -z "${TMUX:-}" ]]; then
+    tmux attach-session -t "$1"
   else
-    tmux switch-client -t $1
+    tmux switch-client -t "$1"
   fi
 }
 
-has_session() {
-  tmux list-sessions | grep -q "^$1:"
+hydrate() {
+  tmux send-keys -t "$1" "ready-tmux" Enter
 }
 
-hydrate() {
-  tmux send-keys -t $1 ready-tmux c-M
+# Emit search roots one per line: the built-in defaults, then any extra roots
+# from CONFIG_FILE (added on top, not replacing the defaults).
+read_search_paths() {
+  printf '%s\n' "${default_paths[@]}"
+
+  [[ -f "$CONFIG_FILE" ]] || return 0
+  local line
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%%#*}"                       # strip comments
+    line="${line#"${line%%[![:space:]]*}"}"  # trim leading whitespace
+    line="${line%"${line##*[![:space:]]}"}"  # trim trailing whitespace
+    [[ -z "$line" ]] && continue
+    printf '%s\n' "${line/#\~/$HOME}"         # expand a leading ~
+  done <"$CONFIG_FILE"
 }
 
 if [[ $# -eq 1 ]]; then
-  selected=$1
+  selected="$1"
 else
-  selected=$(find ~ ~/personal/dotfiles  ~/personal/dotfiles/.config ~/atlassian ~/personal -mindepth 1 -maxdepth 1 -type d | fzf)
+  # Keep roots that exist (a stale entry never aborts the picker) and drop
+  # duplicates so a config root repeating a default is not listed twice.
+  existing=()
+  seen=""
+  while IFS= read -r path; do
+    [[ -d "$path" ]] || continue
+    case "$seen" in *"|$path|"*) continue ;; esac
+    seen="$seen|$path|"
+    existing+=("$path")
+  done < <(read_search_paths)
+
+  if [[ ${#existing[@]} -eq 0 ]]; then
+    echo "tmux-sessionizer: no search roots exist (checked $CONFIG_FILE / defaults)" >&2
+    exit 1
+  fi
+
+  selected=$(find "${existing[@]}" -mindepth 1 -maxdepth 1 -type d | fzf) || exit 0
 fi
 
-if [[ -z $selected ]]; then
-  exit 0
-fi
+[[ -z "$selected" ]] && exit 0
 
 selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s $selected_name -c $selected
-  hydrate $selected_name
-  exit 0
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+  tmux new-session -ds "$selected_name" -c "$selected"
+  hydrate "$selected_name"
 fi
 
-if ! has_session $selected_name; then
-  tmux new-session -ds $selected_name -c $selected
-  hydrate $selected_name 
-fi
-
-switch_to $selected_name
+switch_to "$selected_name"
