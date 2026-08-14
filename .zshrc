@@ -41,13 +41,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
-# java config
-export JAVA_21_HOME=$(/usr/libexec/java_home -v 21)
-export JAVA_17_HOME=$(/usr/libexec/java_home -v 17)
-
-alias java21='export JAVA_HOME=$JAVA_21_HOME'
-alias java17='export JAVA_HOME=$JAVA_17_HOME'
-
 # export GOPATH=$HOME/go
 
 source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
