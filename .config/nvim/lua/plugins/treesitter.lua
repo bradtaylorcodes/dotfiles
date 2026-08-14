@@ -4,7 +4,7 @@ return {
     branch = 'main',
     lazy = false,
     build = ':TSUpdate',
-    init = function()
+    config = function()
       -- Languages to ensure are installed
       local ensure_installed = {
         'json',
@@ -27,17 +27,8 @@ return {
         'bash',
       }
 
-      -- Install any missing parsers on startup
-      local installed = require('nvim-treesitter.config').get_installed()
-      local to_install = vim.iter(ensure_installed)
-          :filter(function(parser)
-            return not vim.tbl_contains(installed, parser)
-          end)
-          :totable()
-
-      if #to_install > 0 then
-        require('nvim-treesitter').install(to_install)
-      end
+      -- install() is a no-op for parsers that are already installed.
+      require('nvim-treesitter').install(ensure_installed)
 
       -- Enable treesitter highlighting and indentation via FileType autocmd
       vim.api.nvim_create_autocmd('FileType', {
