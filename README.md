@@ -44,6 +44,47 @@ Neovim built from source at a pinned version (`v0.11.0`, override with
 `./dev-env` copies configs from this repo into `$HOME`. It reads the repo
 location from `$DEV_ENV_HOME` (set in `.zshrc` to `~/personal/dotfiles`).
 
+### First-time setup
+
+The checked-in `.zshrc` expects this repository at `~/personal/dotfiles`, so
+clone it there before running the deployment script:
+
+```sh
+mkdir -p ~/personal
+git clone https://github.com/bradtaylorcodes/dotfiles.git ~/personal/dotfiles
+cd ~/personal/dotfiles
+
+./install
+
+# dev-env needs this before the repository's .zshrc has been deployed.
+export DEV_ENV_HOME="$PWD"
+
+# Optional machine/work-specific shell settings are loaded from this file.
+touch ~/.zshrc.work
+
+./dev-env --dry
+./dev-env
+exec zsh
+```
+
+The install scripts may prompt for `sudo`, install the Xcode command-line tools
+on macOS, and download or build software. The dry run previews the files that
+`dev-env` will replace; run the non-dry command only after reviewing the
+output. Existing targets are removed before the repository copies are
+installed, so back up any local config you want to keep.
+
+To enable the tmux plugins declared in `.tmux.conf`, install TPM once, then
+start tmux and press `prefix + I` (the configured prefix is `Ctrl-a`):
+
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tmux
+```
+
+After the first deployment, `.zshrc` exports `DEV_ENV_HOME` and adds the
+deployed helper scripts to `PATH`, so future updates can be deployed from any
+directory with `dev-env`.
+
 ```sh
 ./dev-env              # deploy all config files
 ./dev-env --dry        # print what would be copied without doing it
