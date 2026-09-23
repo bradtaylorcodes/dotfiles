@@ -14,7 +14,7 @@ zsh/.zshrc                     # shell config
 nvim/.config/nvim/             # Neovim config (lazy.nvim); see nvim/.config/nvim/README.md
 wezterm/.config/wezterm/       # WezTerm terminal config
 starship/.config/starship.toml # prompt config
-scripts/.local/scripts/        # helper scripts added to PATH (gs, idea)
+scripts/.local/scripts/        # helper scripts added to PATH (gs)
 ```
 
 ## Deploy config (Stow)
@@ -70,4 +70,3 @@ and a `home` default workspace. `keymaps.lua` defines LEADER-based bindings
 Added to `PATH` via `.zshrc`.
 
 - `gs` - fzf-driven `git switch` (handles remote branches).
-- `idea` - launch IntelliJ IDEA Ultimate from the CLI.
