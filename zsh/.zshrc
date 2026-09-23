@@ -18,9 +18,6 @@ addToPathFront() {
   fi
 }
 
-# work specific configurations
-source $HOME/.zshrc.work
-
 # my scripts and aliases
 addToPath $HOME/.local/scripts
 
