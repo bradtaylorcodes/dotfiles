@@ -18,6 +18,15 @@ style = "bold mauve"
 truncation_length = 4
 style = "bold lavender"
 
+[line_break]
+disabled = true
+
+[python]
+disabled = true
+
+[ruby]
+disabled = true
+
 # Palette definitions
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

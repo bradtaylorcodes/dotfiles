@@ -2,7 +2,7 @@ local keymaps = require 'keymaps'
 local config = {}
 
 config.font_size = 18
-config.color_scheme = 'tokyonight_night'
+config.color_scheme = 'Catppuccin Mocha'
 config.window_decorations = 'RESIZE'
 config.default_workspace = 'home'
 config.enable_tab_bar = false

@@ -42,31 +42,3 @@ To remove a package's symlinks: `stow -D -t ~ <package>`. To re-link after
 moving files within a package: `stow -R -t ~ <package>`.
 
 Package installation (Homebrew, WezTerm, Neovim, etc.) is currently manual.
-
-## Shell (`.zshrc`)
-
-- [Starship](https://starship.rs) prompt, zsh-autosuggestions, and
-  zsh-syntax-highlighting.
-- fzf key bindings and completion.
-- nvm for node version management.
-- `v` / `vim` alias to `nvim`.
-
-## Neovim (`.config/nvim`)
-
-lazy.nvim-managed config with the lockfile committed. Core settings live under
-`lua/bradleytaylor/` (keymaps, options, autocmds, diagnostics) and plugins are
-one file each under `lua/plugins/` (LSP, Telescope, Treesitter, completion,
-conform, harpoon, oil, git, dadbod, lualine, mini, and more). Space is the
-leader key. See `nvim/.config/nvim/README.md` for details.
-
-## WezTerm (`.config/wezterm`)
-
-tokyonight color scheme, font size 18, tab bar disabled, blinking-block cursor,
-and a `home` default workspace. `keymaps.lua` defines LEADER-based bindings
-(tab activation `1`-`8`, debug overlay).
-
-## Helper scripts (`.local/scripts`)
-
-Added to `PATH` via `.zshrc`.
-
-- `gs` - fzf-driven `git switch` (handles remote branches).
