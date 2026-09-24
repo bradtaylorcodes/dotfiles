@@ -13,6 +13,7 @@ vimcmd_symbol = "[❮](subtext1)" # For use with zsh-vi-mode
 
 [git_branch]
 style = "bold mauve"
+format = "[$symbol$branch(:$remote_branch)]($style) "
 
 [directory]
 truncation_length = 4
