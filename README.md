@@ -15,6 +15,7 @@ nvim/.config/nvim/             # Neovim config (lazy.nvim); see nvim/.config/nvi
 wezterm/.config/wezterm/       # WezTerm terminal config
 starship/.config/starship.toml # prompt config
 herdr/.config/herdr/           # herdr terminal workspace manager config
+claude/.claude/                # Claude Code CLAUDE.md and status line script
 scripts/.local/scripts/        # helper scripts added to PATH (gs, herdr-sessionizer)
 ```
 
@@ -30,8 +31,8 @@ mkdir -p ~/personal
 git clone https://github.com/bradtaylorcodes/dotfiles.git ~/personal/dotfiles
 cd ~/personal/dotfiles
 
-stow -t ~ zsh nvim starship scripts herdr    # core packages
-stow -t ~ wezterm                      # skip on a headless box
+stow -t ~ zsh nvim starship scripts herdr claude    # core packages
+stow -t ~ wezterm                                   # skip on a headless box
 
 exec zsh
 ```
@@ -58,3 +59,17 @@ herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
 The plugin link makes `ctrl+h/j/k/l` move between herdr panes and Neovim
 splits. Extra sessionizer search roots (besides `~/personal`) go in
 `~/.config/herdr-sessionizer/paths`, one per line.
+
+### Claude Code status line
+
+`claude/.claude/statusline-command.sh` shows model, effort, directory, git
+branch, 5h/7d usage limits and context usage (needs `jq`). Only the script is
+stowed, since Claude Code rewrites `~/.claude/settings.json` itself; add this
+to that file once per machine:
+
+```json
+"statusLine": {
+  "type": "command",
+  "command": "bash ~/.claude/statusline-command.sh"
+}
+```
