@@ -14,7 +14,8 @@ zsh/.zshrc                     # shell config
 nvim/.config/nvim/             # Neovim config (lazy.nvim); see nvim/.config/nvim/README.md
 wezterm/.config/wezterm/       # WezTerm terminal config
 starship/.config/starship.toml # prompt config
-scripts/.local/scripts/        # helper scripts added to PATH (gs)
+herdr/.config/herdr/           # herdr terminal workspace manager config
+scripts/.local/scripts/        # helper scripts added to PATH (gs, herdr-sessionizer)
 ```
 
 ## Deploy config (Stow)
@@ -29,7 +30,7 @@ mkdir -p ~/personal
 git clone https://github.com/bradtaylorcodes/dotfiles.git ~/personal/dotfiles
 cd ~/personal/dotfiles
 
-stow -t ~ zsh nvim starship scripts    # core packages
+stow -t ~ zsh nvim starship scripts herdr    # core packages
 stow -t ~ wezterm                      # skip on a headless box
 
 exec zsh
@@ -42,3 +43,18 @@ To remove a package's symlinks: `stow -D -t ~ <package>`. To re-link after
 moving files within a package: `stow -R -t ~ <package>`.
 
 Package installation (Homebrew, WezTerm, Neovim, etc.) is currently manual.
+
+### herdr
+
+The herdr config uses tmux-style keys (`ctrl+a` prefix, `|`/`-` splits,
+`hjkl` resize, `f` for the `herdr-sessionizer` project picker). One-time setup
+per machine, after Neovim has installed its plugins:
+
+```sh
+brew install jq fzf    # jq is needed by smart-splits' herdr script
+herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
+```
+
+The plugin link makes `ctrl+h/j/k/l` move between herdr panes and Neovim
+splits. Extra sessionizer search roots (besides `~/personal`) go in
+`~/.config/herdr-sessionizer/paths`, one per line.

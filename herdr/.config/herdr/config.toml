@@ -1,0 +1,58 @@
+# herdr config, modeled on the old tmux setup (see `git show 1f1e888^:.tmux.conf`)
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[keys]
+prefix = "ctrl+a"
+
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+
+# splits open in the current pane's directory ([terminal] new_cwd = "follow")
+split_vertical = ["prefix+|", "prefix+v"]
+split_horizontal = "prefix+minus"
+
+zoom = ["prefix+m", "prefix+z"]
+
+# prefix+hjkl resizes like tmux; ctrl+hjkl moves focus (smart-splits, below)
+resize_pane_left = "prefix+h"
+resize_pane_down = "prefix+j"
+resize_pane_up = "prefix+k"
+resize_pane_right = "prefix+l"
+
+focus_pane_left = "prefix+left"
+focus_pane_down = "prefix+down"
+focus_pane_up = "prefix+up"
+focus_pane_right = "prefix+right"
+
+# fzf project picker: focus or create a workspace for a directory
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "$HOME/.local/scripts/herdr-sessionizer"
+width = "60%"
+height = "50%"
+
+# seamless ctrl+hjkl across herdr panes and nvim splits
+# requires: herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "smart-splits.nvim.left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "smart-splits.nvim.down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "smart-splits.nvim.up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "smart-splits.nvim.right"
