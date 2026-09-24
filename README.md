@@ -57,8 +57,41 @@ herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
 ```
 
 The plugin link makes `ctrl+h/j/k/l` move between herdr panes and Neovim
-splits. Extra sessionizer search roots (besides `~/personal`) go in
-`~/.config/herdr-sessionizer/paths`, one per line.
+splits.
+
+#### Sessionizer search paths
+
+`prefix+f` runs `herdr-sessionizer`, which lists the immediate subdirectories
+of each search root in fzf (the roots themselves aren't listed). Picking one
+focuses the workspace with that directory's name, or creates it.
+
+`~/personal` is always searched. To add roots on every machine, add them to
+`default_paths` in `scripts/.local/scripts/herdr-sessionizer`:
+
+```bash
+default_paths=(
+  "$HOME/personal"
+  "$HOME/work"
+)
+```
+
+To add roots on one machine only, list them in
+`~/.config/herdr-sessionizer/paths`. That file isn't in this repo, so it stays
+local to the machine:
+
+```sh
+mkdir -p ~/.config/herdr-sessionizer
+cat >> ~/.config/herdr-sessionizer/paths <<'EOF'
+# one directory per line
+~/work
+/opt/projects
+EOF
+```
+
+In that file, `#` starts a comment, blank lines are ignored and a leading `~`
+expands to your home directory (other variables such as `$HOME` don't).
+Roots from the file add to `default_paths` rather than replacing them, and
+directories that don't exist or are listed twice are skipped.
 
 ### Claude Code status line
 
