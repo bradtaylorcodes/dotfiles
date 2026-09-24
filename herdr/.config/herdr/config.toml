@@ -4,6 +4,11 @@ onboarding = false
 [theme]
 name = "catppuccin"
 
+# sidebar starts hidden; prefix+b toggles it
+[ui]
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+
 [keys]
 prefix = "ctrl+a"
 
