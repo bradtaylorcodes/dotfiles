@@ -1,0 +1,20 @@
+id = "last-workspace"
+name = "Last workspace"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Toggle to the previously focused workspace, like tmux's prefix+L"
+platforms = ["linux", "macos"]
+
+# seed the history with whatever workspace is focused when herdr starts
+[[startup]]
+command = ["bash", "last-workspace.sh", "record"]
+
+[[events]]
+on = "workspace.focused"
+command = ["bash", "last-workspace.sh", "record"]
+
+[[actions]]
+id = "switch"
+title = "Switch to last workspace"
+contexts = ["global"]
+command = ["bash", "last-workspace.sh", "switch"]

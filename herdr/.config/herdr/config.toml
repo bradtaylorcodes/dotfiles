@@ -40,6 +40,13 @@ command = "$HOME/.local/scripts/herdr-sessionizer"
 width = "60%"
 height = "50%"
 
+# like tmux's prefix+L (switch-client -l): toggle to the previous workspace
+# requires: herdr plugin link ~/.config/herdr/plugins/last-workspace
+[[keys.command]]
+key = "prefix+shift+l"
+type = "plugin_action"
+command = "last-workspace.switch"
+
 # seamless ctrl+hjkl across herdr panes and nvim splits
 # requires: herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
 [[keys.command]]

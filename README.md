@@ -48,16 +48,19 @@ Package installation (Homebrew, WezTerm, Neovim, etc.) is currently manual.
 ### herdr
 
 The herdr config uses tmux-style keys (`ctrl+a` prefix, `|`/`-` splits,
-`hjkl` resize, `f` for the `herdr-sessionizer` project picker). One-time setup
+`hjkl` resize, `f` for the `herdr-sessionizer` project picker, `L` to toggle to
+the previous workspace). One-time setup
 per machine, after Neovim has installed its plugins:
 
 ```sh
 brew install jq fzf    # jq is needed by smart-splits' herdr script
 herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
+herdr plugin link ~/.config/herdr/plugins/last-workspace
 ```
 
-The plugin link makes `ctrl+h/j/k/l` move between herdr panes and Neovim
-splits.
+The smart-splits link makes `ctrl+h/j/k/l` move between herdr panes and Neovim
+splits. The `last-workspace` plugin (in this repo) remembers workspace focus so
+`prefix+L` can switch back to the previous workspace.
 
 #### Sessionizer search paths
 
