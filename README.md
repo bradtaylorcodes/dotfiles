@@ -96,9 +96,9 @@ directories that don't exist or are listed twice are skipped.
 ### Claude Code status line
 
 `claude/.claude/statusline-command.sh` shows model, effort, directory, git
-branch, 5h/7d usage limits and context usage (needs `jq`). Only the script is
-stowed, since Claude Code rewrites `~/.claude/settings.json` itself; add this
-to that file once per machine:
+branch and context usage on one line (needs `jq`). Only the script is stowed,
+since Claude Code rewrites `~/.claude/settings.json` itself; add this to that
+file once per machine:
 
 ```json
 "statusLine": {
