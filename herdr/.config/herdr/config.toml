@@ -8,6 +8,8 @@ name = "catppuccin"
 [ui]
 sidebar_start_collapsed = true
 sidebar_collapsed_mode = "hidden"
+# splits share a single divider instead of leaving a gap between panes
+pane_gaps = false
 
 [keys]
 prefix = "ctrl+a"
