@@ -29,7 +29,9 @@ return {
             kind_icon = {
               text = function(ctx)
                 local icon = ctx.kind_icon
-                if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                if ctx.item.kind_icon then
+                  -- keep icons set by the source, e.g. tailwind color swatches
+                elseif vim.tbl_contains({ 'Path' }, ctx.source_name) then
                   local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
                   if dev_icon then
                     icon = dev_icon

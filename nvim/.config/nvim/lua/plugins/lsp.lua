@@ -56,7 +56,14 @@ return {
       },
       ruff = {},
       cssls = {},
-      tailwindcss = {},
+      tailwindcss = {
+        settings = {
+          tailwindCSS = {
+            -- also complete classes inside these helper calls, e.g. cn('...')
+            classFunctions = { 'cn', 'clsx', 'cva', 'cx', 'tw', 'twMerge' },
+          },
+        },
+      },
       jsonls = {
         settings = {
           json = {

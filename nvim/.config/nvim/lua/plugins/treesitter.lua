@@ -22,6 +22,7 @@ return {
         'gitignore',
         'go',
         'python',
+        'astro',
         'ruby',
         'graphql',
         'vimdoc',
