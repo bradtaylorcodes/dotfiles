@@ -14,7 +14,8 @@ return {
         html = { 'prettier' },
         json = { 'prettier' },
         astro = { 'prettier' },
-        java = { 'google-java-format' }
+        java = { 'google-java-format' },
+        python = { 'ruff_organize_imports', 'ruff_format' },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable

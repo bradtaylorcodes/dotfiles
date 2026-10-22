@@ -21,6 +21,7 @@ return {
         'dockerfile',
         'gitignore',
         'go',
+        'python',
         'ruby',
         'graphql',
         'vimdoc',

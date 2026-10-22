@@ -9,6 +9,12 @@ return {
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(args)
+        -- pyright provides better hover docs than ruff
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client.name == 'ruff' then
+          client.server_capabilities.hoverProvider = false
+        end
+
         local set = function(keys, func, desc)
           vim.keymap.set('n', keys, func, { buffer = args.buf, desc = 'LSP: ' .. desc })
         end
@@ -42,7 +48,13 @@ return {
         },
       },
       eslint = {},
-      pyright = {},
+      pyright = {
+        settings = {
+          -- let ruff handle import organizing
+          pyright = { disableOrganizeImports = true },
+        },
+      },
+      ruff = {},
       cssls = {},
       tailwindcss = {},
       jsonls = {
