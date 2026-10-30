@@ -13,10 +13,17 @@ return {
         css = { 'prettier' },
         html = { 'prettier' },
         json = { 'prettier' },
+        jsonc = { 'prettier' },
         astro = { 'prettier' },
         java = { 'google-java-format' },
         python = { 'ruff_organize_imports', 'ruff_format' },
       },
+      formatters = {
+        -- only run prettier in projects that have a prettier config
+        prettier = { require_cwd = true },
+      },
+      -- expected in projects without prettier, so don't warn about it
+      notify_no_formatters = false,
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

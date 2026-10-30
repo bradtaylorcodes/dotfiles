@@ -8,6 +8,7 @@ return {
       -- Languages to ensure are installed
       local ensure_installed = {
         'json',
+        'jsdoc',
         'javascript',
         'typescript',
         'tsx',

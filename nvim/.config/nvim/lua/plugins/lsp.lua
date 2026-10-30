@@ -14,9 +14,15 @@ return {
         if client and client.name == 'ruff' then
           client.server_capabilities.hoverProvider = false
         end
+        -- formatting is left to prettier, only in projects that use it
+        if client and client.name == 'vtsls' then
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end
 
         local set = function(keys, func, desc)
-          vim.keymap.set('n', keys, func, { buffer = args.buf, desc = 'LSP: ' .. desc })
+          -- nowait so gr doesn't wait for the built-in grn, grr, etc.
+          vim.keymap.set('n', keys, func, { buffer = args.buf, desc = 'LSP: ' .. desc, nowait = true })
         end
         local builtin = require 'telescope.builtin'
 
@@ -27,6 +33,9 @@ return {
         set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, 'Show workspace symbols')
         set('<leader>rn', vim.lsp.buf.rename, 'Rename')
         set('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+        set('<leader>oi', function()
+          vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' }, diagnostics = {} }, apply = true }
+        end, 'Organize imports')
         set('gD', vim.lsp.buf.declaration, 'Go to declaration')
         set('K', function()
           vim.lsp.buf.hover { border = 'rounded' }
@@ -34,20 +43,41 @@ return {
       end,
     })
 
+    -- vtsls sends this vscode-only command after organizing imports
+    vim.lsp.commands['_typescript.didOrganizeImports'] = function() end
+
+    local eslint_on_attach = vim.lsp.config.eslint.on_attach
     local servers = {
       lua_ls = {},
       html = {},
       marksman = {},
       gopls = {},
       dockerls = {},
-      ts_ls = {
+      vtsls = {
         settings = {
-          implicitProjectConfiguration = {
-            checkJs = true,
+          -- use the project's typescript version instead of the bundled one
+          vtsls = { autoUseWorkspaceTsdk = true },
+          ['js/ts'] = {
+            implicitProjectConfig = {
+              checkJs = true,
+            },
           },
         },
       },
-      eslint = {},
+      eslint = {
+        on_attach = function(client, bufnr)
+          eslint_on_attach(client, bufnr)
+          -- fix all auto-fixable problems on save
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = bufnr,
+            callback = function()
+              if not (vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat) then
+                vim.cmd 'LspEslintFixAll'
+              end
+            end,
+          })
+        end,
+      },
       pyright = {
         settings = {
           -- let ruff handle import organizing
